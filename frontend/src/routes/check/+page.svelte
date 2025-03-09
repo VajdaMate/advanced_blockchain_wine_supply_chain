@@ -178,7 +178,7 @@
     </ColCentered>
 {:else}
     <RowCentered>
-        <div class="flex justify-center items-center">
+        <div class="sm: hidden md:hidden lg:flex justify-center items-center  ">
             <img
                 class="w-4/6 h-4/6 object-contain"
                 src={BottleImage}
@@ -187,7 +187,7 @@
         </div>
 
         <Card.Root
-            class="bg-slate-900 w-full sm:w-2/4 md:w-1/2 lg:w-1/3 h-fit ml-20 mr-20"
+            class="bg-slate-900 w-full sm:w-3/4 md:w-3/4 lg:w-2/5 h-fit"
         >
             <Card.Header>
                 <Card.Title class="text-4xl mb-2"
@@ -206,7 +206,9 @@
                     <Label>Üveg lekérés azonosító alapján</Label>
                     <Input type="number" bind:value={ID} />
                     <Button on:click={listByID} class="mt-2 w-full font-medium text-lg ">Üveg lekérése megadott azonosítóval</Button>
+                    {#if isThereWallet}
                     <Button on:click={listByOwner} class="mt-2 w-full font-medium text-lg">Saját címmel regisztrált üvegek lekérése</Button>
+                    {/if}
                 </form>
                 {#if noSuchID}
                     <Alert.Root class="text-center mt-1 mb-1"> 
@@ -229,7 +231,7 @@
                         </Table.Header>
                         <Table.Body class="w-fit" >
                             {#each $bottles as bottle}
-                                <Table.Row class="text-center">
+                                <Table.Row class="text-center sm:text-sm md:text-base lg:text-l">
                                     <Table.Cell >{bottle.bottleId}</Table.Cell>
                                     <Table.Cell >{bottle.typeOfGrape}</Table.Cell>
                                     <Table.Cell >{bottle.sunnyHours}</Table.Cell>
@@ -262,7 +264,7 @@
             </Card.Footer>
         </Card.Root>
 
-        <div class="flex justify-center items-center">
+        <div class="sm: hidden md:hidden lg:flex justify-center items-center  ">
             <img
                 class="w-4/6 h-4/6 object-contain"
                 src={BottleImage}
