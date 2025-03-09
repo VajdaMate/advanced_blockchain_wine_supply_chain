@@ -25,7 +25,7 @@
 
     let contractRegistered:boolean = false;
     
-    let bottleID: number;
+    let bottleID: string;
     let typeOfGrape: string="";
     let sunnyHours: number=0;
     let rainMilimeters: number=0;
@@ -44,10 +44,10 @@
 
     async function submitForm() {
         contractRegistered = false;
-       
+        let intID:number = parseInt(bottleID,16)
         if (justTheType) {
             console.log(justTheType)
-            const tx = await BottleStore.registerBottle(typeOfGrape);
+            const tx = await BottleStore.registerBottle(intID, typeOfGrape);
             const receipt = await (tx as any).wait();
             if (receipt.status === 1) {
                 bottleID = await BottleStore.returnLastBottleID();
@@ -61,7 +61,7 @@
         }
 
         else{
-            const tx = await BottleStore.registerBottle(typeOfGrape,[sunnyHours], [rainMilimeters], [timeOfHarvest], [timeOfBottling]);
+            const tx = await BottleStore.registerBottle(intID,typeOfGrape,[sunnyHours], [rainMilimeters], [timeOfHarvest], [timeOfBottling]);
             const receipt = await (tx as any).wait();
             if (receipt.status === 1) {
                 bottleID = await BottleStore.returnLastBottleID();
@@ -180,7 +180,8 @@
             </Card.Header>
 
             <Card.Content>
-                                
+                <Label>Azonosító</Label>
+                <Input type="string" bind:value={bottleID} />
             
                 <Label>Szőlő fajtája</Label>
                 <Input type="string" bind:value={typeOfGrape} />
@@ -232,8 +233,11 @@
                                 <div class="mt-2 mb-2 text-2xl text-red-700"> 
                                     {#if justTheType}
                                         <div class="text-base text-slate-300">Mivel csak a szőlőfajtát adta meg, vagy nem adott meg mindent adatot, ezért a többi attribútumot nem frissíti ezzel a művelettel!</div>
+                                        <div>Azonosító: {bottleID}</div>
                                         <div>Szőlőfajta: {typeOfGrape}</div>
+
                                     {:else}
+                                        <div>Azonosító: {bottleID}</div>
                                         <div>Szőlőfajta: {typeOfGrape}</div>
                                         <div>Napos órák száma: {sunnyHours}</div>
                                         <div>Eső mennyisége: {rainMilimeters}</div>
