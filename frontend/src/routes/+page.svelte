@@ -5,30 +5,27 @@
     import ColCentered from '$lib/ColCentered.svelte';
 </script>
 
-<RowCentered>
-    <ColCentered>
-        <Button class="text-xl lg:text-5xl text-slate-400 mb-20" variant="link" href="/register"> 
+<div class="sm: flex flex-col h-screen justify-center items-center md:flex flex-col h-screen justify-center items-center lg:flex lg:flex-row h-screen justify-center items-center ">
+    
+    <div class="flex flex-col items-center mb-10 md:mb-0 lg:mb-0">
+        <Button class="text-3xl sm:text-4xl md:text-5xl lg:text-5xl text-slate-400 mb-4 md:mb-10 lg:mb-20 p-10 " variant="link" href="/register">
             Regisztrálj egy üveget
         </Button>
-        
-        <Button class="text-xl lg:text-5xl text-slate-400" variant="link" href="/transfer">
+        <Button class="text-3xl sm:text-4xl md:text-5xl lg:text-5xl text-slate-400 mb-4 md:mb-10 lg:mb-20 p-10" variant="link" href="/transfer">
             Ruházd át tulajdonjogod
         </Button>
+    </div>
 
-    </ColCentered>
-    
-    <RowCentered>
-       <img class="h-full w-full object-cover" src={BottleImage} alt="Wine Bottle" />
-    </RowCentered>
-    
-    <ColCentered>
-        <Button class="text-xl lg:text-5xl text-slate-400 mb-20" variant="link" href="/check"> 
+    <div class="sm: hidden md:hidden lg:block h-full ">
+        <img class="h-full max-h-lg max-w-lg w-full object-cover" src={BottleImage} alt="Wine Bottle" />
+    </div>
+
+    <div class="flex flex-col items-center">
+        <Button class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-400 mb-4 md:mb-10 lg:mb-20 p-10" variant="link" href="/check">
             Ellenőrizz egy üveget
         </Button>
-
-        <Button class="text-xl lg:text-5xl text-slate-400" variant="link" href="/update">
-           Frissíts egy üveget
+        <Button class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-400 mb-4 md:mb-10 lg:mb-20 p-10" variant="link" href="/update">
+            Frissíts egy üveget
         </Button>
-
-    </ColCentered>
-</RowCentered>
+    </div>
+</div>
