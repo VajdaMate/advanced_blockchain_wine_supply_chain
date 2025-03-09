@@ -156,8 +156,35 @@
        
     }
 
+
+    let s: string | null = null;
+    let e: string | null = null;
+    let c: string | null = null;
+    let response: any = null;
+    let error: string | null = null;
+
     onMount(async () => {
-       await connect();
+        await connect();
+        const urlParams = new URLSearchParams(window.location.search);
+        s = urlParams.get("s");
+        e = urlParams.get("e");
+        c = urlParams.get("c");
+       
+        if (!s || !e || !c) {
+            console.log("Hiányzó NFC paraméterek!");
+            return;
+        }
+
+        try {
+            const backendURL = `http://127.0.0.1:5000/verify?s=${s}&e=${e}&c=${c}`;
+            const res = await fetch(backendURL);
+            response = await res.json();
+            console.log(response)
+        } catch (err) {
+            console.error("Hiba a backend elérésénél:", err);
+            error = "Nem sikerült kapcsolatot létesíteni a szerverrel.";
+        }
+
     });
 </script>
 
