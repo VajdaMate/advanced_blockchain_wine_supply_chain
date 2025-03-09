@@ -131,7 +131,7 @@
             BottleStoreABI,
             signer,
         );
-        isThereWallet = true
+        
     }
 
 
@@ -147,6 +147,7 @@
 
     async function connect(){
         if (typeof (window as any).ethereum !== "undefined"){
+            isThereWallet = true
             await connectMetamaskContract();
         }
         else{
@@ -162,8 +163,8 @@
 
 {#if false}
     <ColCentered>
-        <Alert.Root class="w-3/4 p-8">
-            <Alert.Title class="text-5xl text-slate-400"
+        <Alert.Root class="bg-slate-900 w-3/4 p-10">
+            <Alert.Title class="text-5xl text-slate-100"
                 >Kérlek csatlakoztasd az ethereum pénztárcád!</Alert.Title
             >
             <Alert.Description class="text-2xl text-slate-400">
@@ -171,7 +172,7 @@
             </Alert.Description>
         </Alert.Root>
         <Button
-            class="text-4xl text-slate-600 m-10 p-10"
+            class="text-4xl text-slate-950 m-5 p-10"
             on:click={connect}>Connect</Button
         >
     </ColCentered>

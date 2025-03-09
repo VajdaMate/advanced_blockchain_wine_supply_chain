@@ -86,6 +86,7 @@
 
     async function connectMetamaskContract() {
         await evm.setProvider();
+        
         provider = new ethers.BrowserProvider((window as any).ethereum);
         signer = await provider.getSigner();
         BottleStore = new ethers.Contract(
@@ -93,7 +94,7 @@
             BottleStoreABI,
             signer,
         );
-        isThereWallet = true
+       
     }
 
 
@@ -109,6 +110,7 @@
 
     async function connect(){
         if (typeof (window as any).ethereum !== "undefined"){
+            isThereWallet = true
             await connectMetamaskContract();
         }
         else{
@@ -136,17 +138,14 @@
             </Alert.Description>
         </Alert.Root>
 
-        <div class="flex justify-evenly w-3/4 bg-slate-900 ml-20 mr-20 mt-5 p-5 rounded-lg">
-            <Button class="text-4xl mt-1 " variant="link" href="/check"
-                >Ellenőrzés</Button
-            >
-        </div>
+        <Button class="bg-slate-200 text-5xl text-slate-950 m-5 p-10" href="/check"
+            >Ellenőrzés</Button>
         
     </ColCentered>
     {:else}
         <ColCentered>
-            <Alert.Root class="w-3/4 p-8">
-                <Alert.Title class="text-5xl text-slate-400"
+            <Alert.Root class="bg-slate-900 w-3/4 p-10">
+                <Alert.Title class="text-5xl text-slate-100"
                     >Kérlek csatlakoztasd az ethereum pénztárcád!</Alert.Title
                 >
                 <Alert.Description class="text-2xl text-slate-400">
@@ -154,7 +153,7 @@
                 </Alert.Description>
             </Alert.Root>
             <Button
-                class="text-4xl text-slate-600 m-10 p-10"
+                class="text-4xl text-slate-950 m-5 p-10"
                 on:click={connect}>Connect</Button
             >
         </ColCentered>
