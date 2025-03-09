@@ -51,7 +51,7 @@
     let noSuchID: boolean = false;
     let noBottles: boolean = false;
 
-    let provider: ethers.BrowserProvider
+    let provider: ethers.JsonRpcProvider | ethers.BrowserProvider;
     let signer: ethers.JsonRpcSigner
     let BottleStore: ethers.Contract
 
@@ -120,12 +120,8 @@
     }
 
 
-
-    async function connectWallet() {
+    async function connectMetamaskContract() {
         await evm.setProvider();
-    }
-
-    async function connectContract() {
         provider = new ethers.BrowserProvider((window as any).ethereum);
         signer = await provider.getSigner();
         BottleStore = new ethers.Contract(
@@ -136,8 +132,7 @@
     }
 
     async function connect(){
-        await connectWallet();
-        await connectContract();
+        await connectMetamaskContract();
     }
 
     onMount(async () => {
@@ -157,7 +152,7 @@
         </Alert.Root>
         <Button
             class="text-4xl text-slate-600 m-10 p-10"
-            on:click={connectWallet}>Connect</Button
+            on:click={connect}>Connect</Button
         >
     </ColCentered>
 {:else}
