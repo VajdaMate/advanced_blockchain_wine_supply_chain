@@ -14,6 +14,9 @@
     import RowCentered from "$lib/RowCentered.svelte";
     import ColCentered from "$lib/ColCentered.svelte";
     import BottleImage from "$lib/assets/Wine BottleSmall.png";
+    import Checkmark from "$lib/assets/Checkmark.png";
+    import Xmark from "$lib/assets/X-Mark.png";
+
     import {
         contractAdress,
         BottleStoreABI,
@@ -56,6 +59,7 @@
     let signer: ethers.JsonRpcSigner
     let BottleStore: ethers.Contract
     let isThereWallet: boolean =false
+    let tamperStatus: boolean
 
     async function listByID() {
         try {
@@ -121,6 +125,29 @@
 
     }
 
+    async function listFromNFC(uid:string ){
+        let tempID=parseInt(uid,16)
+        let temp = await BottleStore.returnBottleByID(tempID);
+            let bottle = new Bottle(
+                temp.bottleId,
+                temp.typeOfGrape,
+                temp.sunnyHours,
+                temp.rainMilimeters,
+                temp.timeOfHarvest,
+                temp.timeOfBottling,
+            );
+
+            bottles.update((currentBottles) => {
+                if (currentBottles.some((b) => b.bottleId === bottle.bottleId)) {
+                    return currentBottles;
+                } else {
+                    return [...currentBottles, bottle];
+                }
+
+            });
+
+    }
+
 
     async function connectMetamaskContract() {
         await evm.setProvider();
@@ -180,6 +207,18 @@
             const res = await fetch(backendURL);
             response = await res.json();
             console.log(response)
+
+            listFromNFC(response.uid)
+            console.log(response.status)
+            if (response.tamperstatus==="Not tampered!"){
+                tamperStatus=false
+                
+            }
+            else{
+                tamperStatus=true
+            }
+
+            
         } catch (err) {
             console.error("Hiba a backend elérésénél:", err);
             error = "Nem sikerült kapcsolatot létesíteni a szerverrel.";
@@ -214,7 +253,7 @@
         </div>
 
         <Card.Root
-            class="bg-slate-900 w-full sm:w-3/4 md:w-3/4 lg:w-2/5 h-fit"
+            class="bg-slate-900 w-full sm:w-3/4 md:w-3/4 lg:w-1/2 h-fit"
         >
             <Card.Header>
                 <Card.Title class="text-4xl mb-2"
@@ -259,12 +298,27 @@
                         <Table.Body class="w-fit" >
                             {#each $bottles as bottle}
                                 <Table.Row class="text-center sm:text-sm md:text-base lg:text-l">
-                                    <Table.Cell >{bottle.bottleId}</Table.Cell>
+                                    <Table.Cell >{bottle.bottleId.toString(16)}</Table.Cell>
                                     <Table.Cell >{bottle.typeOfGrape}</Table.Cell>
                                     <Table.Cell >{bottle.sunnyHours}</Table.Cell>
                                     <Table.Cell >{bottle.rainMilimeters}</Table.Cell>
                                     <Table.Cell >{bottle.timeOfHarvest}</Table.Cell>
                                     <Table.Cell >{bottle.timeOfBottling}</Table.Cell>
+                                    {#if tamperStatus}
+                                        <Table.Cell class="flex justify-content items-center">
+                                            <img
+                                            class="w-2/6 h-2/6 object-contain"
+                                            src={Xmark}
+                                            alt="Wine Bottle"/>
+                                        </Table.Cell>
+                                    {:else}
+                                        <Table.Cell class="flex justify-center items-center">
+                                            <img
+                                            class="w-2/6 h-2/6 object-contain"
+                                            src={Checkmark}
+                                            alt="Wine Bottle"/>
+                                        </Table.Cell>
+                                    {/if}
                                 </Table.Row>
                             {/each}
                         </Table.Body>

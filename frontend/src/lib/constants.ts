@@ -1,4 +1,4 @@
-export const headerArray = ["ID", "Szőlő fajta", "Napos órák száma","Eső miliméterben", "Szüretelés időpontja", "Palackozás időpontja"]
+export const headerArray = ["ID", "Szőlő fajta", "Napos órák száma","Eső miliméterben", "Szüretelés időpontja", "Palackozás időpontja", "Eredetiség"]
 export const dateFormats: string[] = 
 ["YYYY.MM.DD",
  "YYYY/MM/DD",
@@ -27,9 +27,9 @@ export const BottleStoreABI = [
         "type": "address"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint128",
         "name": "bottleId",
-        "type": "uint256"
+        "type": "uint128"
       },
       {
         "internalType": "string",
@@ -70,9 +70,9 @@ export const BottleStoreABI = [
             "type": "address"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint128",
             "name": "bottleId",
-            "type": "uint256"
+            "type": "uint128"
           },
           {
             "internalType": "string",
@@ -111,6 +111,11 @@ export const BottleStoreABI = [
   {
     "inputs": [
       {
+        "internalType": "uint128",
+        "name": "_bottleId",
+        "type": "uint128"
+      },
+      {
         "internalType": "string",
         "name": "_typeOfGrape",
         "type": "string"
@@ -144,6 +149,11 @@ export const BottleStoreABI = [
   {
     "inputs": [
       {
+        "internalType": "uint128",
+        "name": "_bottleId",
+        "type": "uint128"
+      },
+      {
         "internalType": "string",
         "name": "_typeOfGrape",
         "type": "string"
@@ -172,9 +182,9 @@ export const BottleStoreABI = [
             "type": "address"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint128",
             "name": "bottleId",
-            "type": "uint256"
+            "type": "uint128"
           },
           {
             "internalType": "string",
@@ -215,9 +225,9 @@ export const BottleStoreABI = [
     "name": "returnLastBottleID",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint128",
         "name": "",
-        "type": "uint256"
+        "type": "uint128"
       }
     ],
     "stateMutability": "view",
