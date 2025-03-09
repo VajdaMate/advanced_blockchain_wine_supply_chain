@@ -51,9 +51,11 @@
     let noSuchID: boolean = false;
     let noBottles: boolean = false;
 
+
     let provider: ethers.JsonRpcProvider | ethers.BrowserProvider;
     let signer: ethers.JsonRpcSigner
     let BottleStore: ethers.Contract
+    let isThereWallet: boolean =false
 
     async function listByID() {
         try {
@@ -129,10 +131,28 @@
             BottleStoreABI,
             signer,
         );
+        isThereWallet = true
+    }
+
+
+    async function connectDirectContract(){
+        const provider = new ethers.JsonRpcProvider();
+        BottleStore = new ethers.Contract(
+            contractAdress,
+            BottleStoreABI,
+            provider,
+        );
+
     }
 
     async function connect(){
-        await connectMetamaskContract();
+        if (typeof (window as any).ethereum !== "undefined"){
+            await connectMetamaskContract();
+        }
+        else{
+            await connectDirectContract()
+        }
+       
     }
 
     onMount(async () => {
@@ -140,7 +160,7 @@
     });
 </script>
 
-{#if !$connected}
+{#if false}
     <ColCentered>
         <Alert.Root class="w-3/4 p-8">
             <Alert.Title class="text-5xl text-slate-400"

@@ -38,6 +38,8 @@
     let signer: ethers.JsonRpcSigner
     let BottleStore: ethers.Contract
 
+    let isThereWallet: boolean =false
+
     let dialogOpen = false;
 
     async function submitForm() {
@@ -82,11 +84,8 @@
         timeOfBottling = "";
     }
 
-    async function connectWallet() {
+    async function connectMetamaskContract() {
         await evm.setProvider();
-    }
-
-    async function connectContract() {
         provider = new ethers.BrowserProvider((window as any).ethereum);
         signer = await provider.getSigner();
         BottleStore = new ethers.Contract(
@@ -94,12 +93,28 @@
             BottleStoreABI,
             signer,
         );
+        isThereWallet = true
     }
 
 
+    async function connectDirectContract(){
+        const provider = new ethers.JsonRpcProvider();
+        BottleStore = new ethers.Contract(
+            contractAdress,
+            BottleStoreABI,
+            provider,
+        );
+
+    }
+
     async function connect(){
-        await connectWallet();
-        await connectContract();
+        if (typeof (window as any).ethereum !== "undefined"){
+            await connectMetamaskContract();
+        }
+        else{
+            await connectDirectContract()
+        }
+       
     }
 
     onMount(async () => {
@@ -110,20 +125,40 @@
 
 
 {#if !$connected}
+    {#if !isThereWallet}
     <ColCentered>
-        <Alert.Root class="w-3/4 p-8">
-            <Alert.Title class="text-5xl text-slate-400"
-                >Kérlek csatlakoztasd az ethereum pénztárcád!</Alert.Title
+        <Alert.Root class="bg-slate-900 w-3/4 p-10">
+            <Alert.Title class="text-5xl text-slate-100"
+                >Kérlek telepítsd a metamask bőngésző bővítményt és csatlakoztasd!</Alert.Title
             >
-            <Alert.Description class="text-2xl text-slate-400">
-                Csatlakozás nélkül nem tudsz interaktálni a blokklánccal.
+            <Alert.Description class="text-3xl text-slate-400">
+                Enélkül nem tudsz üveget regisztrálni.
             </Alert.Description>
         </Alert.Root>
-        <Button
-            class="text-4xl text-slate-600 m-10 p-10"
-            on:click={connectWallet}>Connect</Button
-        >
+
+        <div class="flex justify-evenly w-3/4 bg-slate-900 ml-20 mr-20 mt-5 p-5 rounded-lg">
+            <Button class="text-4xl mt-1 " variant="link" href="/check"
+                >Ellenőrzés</Button
+            >
+        </div>
+        
     </ColCentered>
+    {:else}
+        <ColCentered>
+            <Alert.Root class="w-3/4 p-8">
+                <Alert.Title class="text-5xl text-slate-400"
+                    >Kérlek csatlakoztasd az ethereum pénztárcád!</Alert.Title
+                >
+                <Alert.Description class="text-2xl text-slate-400">
+                    Csatlakozás nélkül nem tudsz interaktálni a blokklánccal.
+                </Alert.Description>
+            </Alert.Root>
+            <Button
+                class="text-4xl text-slate-600 m-10 p-10"
+                on:click={connect}>Connect</Button
+            >
+        </ColCentered>
+    {/if}
 {:else}
     <RowCentered>
         <div class="flex justify-center items-center">
