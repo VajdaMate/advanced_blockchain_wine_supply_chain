@@ -161,7 +161,7 @@
     });
 </script>
 
-{#if false}
+{#if !connected && isThereWallet}
     <ColCentered>
         <Alert.Root class="bg-slate-900 w-3/4 p-10">
             <Alert.Title class="text-5xl text-slate-100"
