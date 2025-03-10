@@ -138,7 +138,7 @@
             </Alert.Description>
         </Alert.Root>
 
-        <Button class="bg-slate-200 text-5xl text-slate-950 m-5 p-10" href="/check"
+        <Button class="bg-slate-200 text-5xl text-slate-950 m-5 p-10" href="/verify"
             >Ellenőrzés</Button>
         
     </ColCentered>
@@ -286,7 +286,7 @@
                 </div>
                 
                 <div class="flex justify-evenly">
-                    <Button class="text-xl mt-1 " variant="link" href="/check"
+                    <Button class="text-xl mt-1 " variant="link" href="/verify"
                         >Ellenőrzés</Button
                     >
                     <Button class="text-xl mt-1" variant="link" href="/update"

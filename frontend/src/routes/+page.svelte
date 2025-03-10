@@ -21,7 +21,7 @@
     </div>
 
     <div class="flex flex-col items-center">
-        <Button class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-400 mb-4 md:mb-10 lg:mb-20 p-10" variant="link" href="/check">
+        <Button class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-400 mb-4 md:mb-10 lg:mb-20 p-10" variant="link" href="/verify">
             Ellenőrizz egy üveget
         </Button>
         <Button class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-400 mb-4 md:mb-10 lg:mb-20 p-10" variant="link" href="/update">
