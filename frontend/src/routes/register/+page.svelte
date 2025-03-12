@@ -94,17 +94,18 @@
             BottleStoreABI,
             signer,
         );
-       
+        
     }
 
 
     async function connectDirectContract(){
-        const provider = new ethers.JsonRpcProvider();
+        const provider = new ethers.JsonRpcProvider("http://172.19.8.77:8545");
         BottleStore = new ethers.Contract(
             contractAdress,
             BottleStoreABI,
             provider,
         );
+        
 
     }
 
@@ -112,9 +113,11 @@
         if (typeof (window as any).ethereum !== "undefined"){
             isThereWallet = true
             await connectMetamaskContract();
+            console.log("Metamask connection")
         }
         else{
             await connectDirectContract()
+            console.log("Direct")
         }
        
     }

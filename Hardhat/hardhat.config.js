@@ -6,9 +6,11 @@ module.exports = {
   networks: {
     hardhat: {},
     localhost: {
-      url: "http://127.0.0.1:8545",
+      url: "http://172.19.8.77:8545",
       chainId: 31337,
-    },
+    }
+    ,
+
   },
   gasReporter: {
       enabled: true,
